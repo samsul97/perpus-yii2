@@ -39,17 +39,14 @@ class Registrasi extends Model
             // ['password', 'string', 'min' => 6, 'max' => 72, 'on' => ['register', 'create']],
             // ['username', 'match', 'pattern' => '/^\d{10}$/', 'message'=> 'Kolom harus terisi 10 digit'],
             // [['passwordConfirm'], 'compare', 'compareAttribute' => 'password'],
-            ['username', 'match', 'pattern' => '/^[a-z]\w*$/i'],
-            [['nama', 'alamat', 'password'], 'required', 'message'=> 'Data tidak boleh kosong'],
+            // ['website', 'url', 'defaultScheme' => 'http'],
             // ['recaptcha', 'compare', 'compareAttribute' => 'captcha', 'operator' => '=='],
-            ['telepon', 'match', 'pattern' => '/((\+[0-9]{6})|0)[-]?[0-9]{7}/'],
-            [['email'], 'unique'],
+            ['username', 'match', 'pattern' => '/^[a-z]\w*$/i', 'message' => 'Username tidak boleh kosong'],
+            [['nama', 'alamat'], 'required', 'message'=> 'Data tidak boleh kosong'],
+            [['password'], 'string', 'min' => 6],
+            ['telepon', 'match', 'pattern' => '/((\+[0-9]{6})|0)[-]?[0-9]{7}/', 'message' => 'Hanya dari nomor 0 sampai 9'],
+            [['email'], 'unique', 'targetClass' => '\app\models\Anggota'],
             ['verifyCode', 'captcha'],
-            ['token', function ($attribute, $params) {
-            if (!ctype_alnum($this->$attribute)) {
-                $this->addError($attribute, 'The token must contain letters or digits.');
-        }
-    }],
         ];
     }
 }

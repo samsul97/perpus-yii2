@@ -15,6 +15,9 @@ use Yii;
  * @property int $id_user_role
  * @property int $status
  */
+
+// Pada user model kegunaan dari masing-masing syntax adalah Autentikasi yang berarti untuk memverifikasi atau konfirmasi untuk mengamankan data pengguna. 
+
 class user extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
 {
      public static function getList()

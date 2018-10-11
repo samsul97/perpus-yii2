@@ -29,6 +29,10 @@ class SiteController extends Controller
         ->setTextBody('<b>hallo guys</b>')
         ->send();
     }
+    // public function actionDownload()
+    // {
+    //     return \Yii::$app->response->sendFile('path/to/file.txt');
+    // }
     public function verifyCode()
     {
         return[
@@ -195,6 +199,9 @@ class SiteController extends Controller
             $anggota->status_aktif = 1;
             $anggota->save();
 
+            // if($anggota->save()) {
+            //     Yii::$app->session->setFlash('success','Data berhasil disimpan.');
+
             $user = new User();
             $user->id_anggota = $anggota->id;
             $user->id_user_role = $anggota->id;
@@ -203,8 +210,12 @@ class SiteController extends Controller
             $user->id_petugas = 0;
             $user->id_user_role = 2;
             $user->status = 1;
+            // token berfungsi untuk membedakan atau menjadikan identitas sebuah user. untuk mengamankan sebuah transaksi.
+            $user->token = Yii::$app->getSecurity()->generateRandomString ( $length = 50 );
             $user->save();
 
+            // if($user->save()) {
+            //     Yii::$app->session->setFlash('success','Data berhasil disimpan.');
 
             return $this->redirect(['site/login']);
         }
@@ -214,6 +225,28 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+    
+    public function actionForgot()
+    {
+        $this->layout = 'main-login';
+        $model = new Forget();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if (!$model->sendEmail()) {
+                Yii::$app->session->setFlash('Gagal', 'Email tidak ditemukan');
+                return $this->refresh();
+            }
+            else
+            {
+                Yii::$app->session->setFlash('Berhasil', 'Cek Email Anda');
+                return $this->redirect('site/login');
+            }
+        }
+        return $this->render('forgot', [
+            'model' => $model,
+        ]);
+    }
+}
 
     // public function actionReset()
     // {
@@ -238,38 +271,34 @@ class SiteController extends Controller
     //     ));
     // }
 
-    public function getToken($token)
-    {
-        $model=Users::model()->findByAttributes(array('token'=>$token));
-        if($model===null)
-            throw new CHttpException(404,'The requested page does not exist.');
-        return $model;
-    }
+    // public function getToken($token)
+    // {
+    //     $model=Users::model()->findByAttributes(array('token'=>$token));
+    //     if($model===null)
+    //         throw new CHttpException(404,'The requested page does not exist.');
+    //     return $model;
+    // }
 
 
-    public function actionVerToken($token)
-    {
-        $model=$this->getToken($token);
-        if(isset($_POST['Ganti']))
-        {
-            if($model->token==$_POST['Ganti']['tokenhid']){
-                $model->password=md5($_POST['Ganti']['password']);
-                $model->token="null";
-                $model->save();
-                Yii::app()->user->setFlash('ganti','<b>Password has been successfully changed! please login</b>');
-                $this->redirect('?r=site/login');
-                $this->refresh();
-            }
-        }
-        $this->render('verifikasi',array(
-            'model'=>$model,
-        ));
-    }
+    // public function actionVerToken($token)
+    // {
+    //     $model=$this->getToken($token);
+    //     if(isset($_POST['Ganti']))
+    //     {
+    //         if($model->token==$_POST['Ganti']['tokenhid']){
+    //             $model->password=md5($_POST['Ganti']['password']);
+    //             $model->token="null";
+    //             $model->save();
+    //             Yii::app()->user->setFlash('ganti','<b>Password has been successfully changed! please login</b>');
+    //             $this->redirect('?r=site/login');
+    //             $this->refresh();
+    //         }
+    //     }
+    //     $this->render('verifikasi',array(
+    //         'model'=>$model,
+    //     ));
+    // }
 
-    public function actionForgot()
-    {
-        $this->layout = 'main-login';
-        $model = new Forget();
         // if (isset($_POST['Lupa']) && isset($_POST['Lupa']['email'])) {
         //     $getEmail=$_POST['Lupa']['email'];
         //     $getModel= Users::model()->findByAttributes(array('email'=>$getEmail));
@@ -298,6 +327,4 @@ class SiteController extends Controller
         //         }
         //     }
         // }
-        $this->render('forgot');
-    }
-}
+        // $this->render('forgot');
