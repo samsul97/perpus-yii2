@@ -12,12 +12,23 @@ use app\models\ContactForm;
 use app\models\User;
 use app\models\Registrasi;
 use app\models\Anggota;
+use app\models\Forget;
 
 class SiteController extends Controller
 {
     /**
      * {@inheritdoc}
      */
+
+    public function actionEmail()
+    {
+        return Yii::$app->mail->compose()
+        ->setFrom('samsulaculhadi@gmail.com')
+        ->setTo('mahmudanurinayatun@gmail.com')
+        ->setSubject('Hai')
+        ->setTextBody('<b>hallo guys</b>')
+        ->send();
+    }
     public function verifyCode()
     {
         return[
@@ -191,6 +202,7 @@ class SiteController extends Controller
             $user->password = $model->password;
             $user->id_petugas = 0;
             $user->id_user_role = 2;
+            $user->status = 1;
             $user->save();
 
 
@@ -257,34 +269,35 @@ class SiteController extends Controller
     public function actionForgot()
     {
         $this->layout = 'main-login';
-        if (isset($_POST['Lupa']) && isset($_POST['Lupa']['email'])) {
-            $getEmail=$_POST['Lupa']['email'];
-            $getModel= Users::model()->findByAttributes(array('email'=>$getEmail));
-            if(isset($_POST['Lupa']))
-            {
-                $getToken=rand(0, 99999);
-                $getTime=date("H:i:s");
-                $getModel->token=md5($getToken.$getTime);
-                $namaPengirim="Owner Perpus JJ";
-                $emailadmin="samsulaculhadi@gmail.com";
-                $subjek="Reset Password";
-                $setpesan="kamu berhasil reset password<br/>
-                <a href='http://yourdomain.com/index.php?r=site/vertoken/view&token=".$getModel->token."'>Click Here to Reset Password</a>";
-                if($getModel->validate())
-                {
-                    $name='=?UTF-8?B?'.base64_encode($namaPengirim).'?=';
-                    $subject='=?UTF-8?B?'.base64_encode($subjek).'?=';
-                    $headers="From: $name <{$emailadmin}>\r\n".
-                    "Reply-To: {$emailadmin}\r\n".
-                    "MIME-Version: 1.0\r\n".
-                    "Content-type: text/html; charset=UTF-8";
-                    $getModel->save();
-                    Yii::app()->user->setFlash('forgot','link to reset your password has been sent to your email');
-                    mail($getEmail,$subject,$setpesan,$headers);
-                    $this->refresh();
-                }
-            }
-        }
+        $model = new Forget();
+        // if (isset($_POST['Lupa']) && isset($_POST['Lupa']['email'])) {
+        //     $getEmail=$_POST['Lupa']['email'];
+        //     $getModel= Users::model()->findByAttributes(array('email'=>$getEmail));
+        //     if(isset($_POST['Lupa']))
+        //     {
+        //         $getToken=rand(0, 99999);
+        //         $getTime=date("H:i:s");
+        //         $getModel->token=md5($getToken.$getTime);
+        //         $namaPengirim="Owner Perpus JJ";
+        //         $emailadmin="samsulaculhadi@gmail.com";
+        //         $subjek="Reset Password";
+        //         $setpesan="kamu berhasil reset password<br/>
+        //         <a href='http://yourdomain.com/index.php?r=site/vertoken/view&token=".$getModel->token."'>Click Here to Reset Password</a>";
+        //         if($getModel->validate())
+        //         {
+        //             $name='=?UTF-8?B?'.base64_encode($namaPengirim).'?=';
+        //             $subject='=?UTF-8?B?'.base64_encode($subjek).'?=';
+        //             $headers="From: $name <{$emailadmin}>\r\n".
+        //             "Reply-To: {$emailadmin}\r\n".
+        //             "MIME-Version: 1.0\r\n".
+        //             "Content-type: text/html; charset=UTF-8";
+        //             $getModel->save();
+        //             Yii::app()->user->setFlash('forgot','link to reset your password has been sent to your email');
+        //             mail($getEmail,$subject,$setpesan,$headers);
+        //             $this->refresh();
+        //         }
+        //     }
+        // }
         $this->render('forgot');
     }
 }

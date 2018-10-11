@@ -1,8 +1,5 @@
 <?php
-$this->pageTitle=Yii::app()->name . ' - Forgot Password';
-$this->breadcrumbs=array(
-	'Forgot Password',
-);
+$this->title = 'Lupa Password';
 ?>
 <?php if(Yii::app()->user->hasFlash('forgot')): ?>
 
