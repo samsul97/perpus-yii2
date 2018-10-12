@@ -83,26 +83,31 @@ $fieldOptions6 = [
 
    <?= $form->field($model, 'verifyCode')->widget(Captcha::className()) ?>
    
+
    <div class="row">
+    <!-- /.col -->
+    <div class="col-xs-12">
+      <div class="col-xs-6">
+        <button type="button" class="btn btn-default btn-block btn-flat" onclick="history.back()"><i class="fa fa-arrow-left"></i> Kembali</button>
+      </div>
+      <div class="col-xs-6">
+        <?= Html::submitButton('Daftar', ['class' => 'btn btn-block btn-sosial btn-danger btn-flat', 'name' => 'login-button']) ?>
+      </div>
+    </div>
+    <!-- /.col -->
+  </div>
 
-     <!-- /.col -->
-     <div class="col-xs-12">
-       <?= Html::submitButton('Daftar', ['class' => 'btn btn-block btn-sosial btn-danger btn-flat', 'name' => 'login-button']) ?>
-     </div>
-     <!-- /.col -->
-   </div>
 
+  <?php ActiveForm::end(); ?>
 
-   <?php ActiveForm::end(); ?>
-
-   <div class="social-auth-links text-center">
-     <p>- OR -</p>
-     <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
-     using Facebook</a>
-     <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
-     in using Google+</a>
-   </div>
-   <!-- /.social-auth-links -->
+  <div class="social-auth-links text-center">
+   <p>- OR -</p>
+   <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
+   using Facebook</a>
+   <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
+   in using Google+</a>
  </div>
- <!-- /.login-box-body -->
+ <!-- /.social-auth-links -->
+</div>
+<!-- /.login-box-body -->
 </div><!-- /.login-box -->

@@ -226,7 +226,7 @@ class SiteController extends Controller
         ]);
     }
     
-    public function actionForgot()
+    public function actionForget()
     {
         $this->layout = 'main-login';
         $model = new Forget();
@@ -242,7 +242,7 @@ class SiteController extends Controller
                 return $this->redirect('site/login');
             }
         }
-        return $this->render('forgot', [
+        return $this->render('forget', [
             'model' => $model,
         ]);
     }

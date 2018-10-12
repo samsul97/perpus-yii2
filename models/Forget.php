@@ -4,10 +4,10 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-
+use app\models\Anggota;
 
 /**
- * LoginForm is the model basename(path)ehind the login form.
+ * LoginForm is the model behind the login form.
  *
  * @property User|null $user This property is read-only.
  *
@@ -15,6 +15,7 @@ use yii\base\Model;
 class Forget extends Model
 {
     public $email;
+    public $token;
     public $verifyCode;
 
     /**
@@ -23,18 +24,29 @@ class Forget extends Model
     public function rules()
     {
         return [
-            // [['password','date_var'],'safe'],
-            // ['password', 'required', 'on' => ['register']],
-            // ['password', 'string', 'min' => 6, 'max' => 72, 'on' => ['register', 'create']],
-            // ['username', 'match', 'pattern' => '/^\d{10}$/', 'message'=> 'Kolom harus terisi 10 digit'],
-            // [['passwordConfirm'], 'compare', 'compareAttribute' => 'password'],
-            [['email'], 'unique'],
+            [['email'], 'required'],
+            [['token'], 'safe'],
             ['verifyCode', 'captcha'],
-            ['token', function ($attribute, $params) {
-            if (!ctype_alnum($this->$attribute)) {
-                $this->addError($attribute, 'The token must contain letters or digits.');
-        }
-    }],
         ];
     }
+
+    // Kirim cek email ada tidak di databases.
+    public function sendEmail()
+    {
+        $model = Anggota::findOne(['email' => $this->email]);
+
+        if ($model !== null) {
+
+            Yii::$app->mail->compose('@app/template/passwordemail',['model' => $model])
+                ->setFrom('samsulaculhadi@gmail.com')
+                ->setTo($this->email)
+                ->setSubject('New Password - Perpustakaan')
+                ->send();
+
+            return true;
+
+        }
+        return false;
+    }
+
 }
