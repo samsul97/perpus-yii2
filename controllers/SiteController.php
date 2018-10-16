@@ -11,8 +11,11 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\User;
 use app\models\Registrasi;
+use app\models\NewPassword;
 use app\models\Anggota;
 use app\models\Forget;
+use yii\web\NotFoundHttpException;
+
 
 class SiteController extends Controller
 {
@@ -20,15 +23,15 @@ class SiteController extends Controller
      * {@inheritdoc}
      */
 
-    public function actionEmail()
-    {
-        return Yii::$app->mail->compose()
-        ->setFrom('samsulaculhadi@gmail.com')
-        ->setTo('mahmudanurinayatun@gmail.com')
-        ->setSubject('Hai')
-        ->setTextBody('<b>hallo guys</b>')
-        ->send();
-    }
+    // public function actionEmail()
+    // {
+    //     return Yii::$app->mail->compose()
+    //     ->setFrom('samsulaculhadi@gmail.com')
+    //     ->setTo('firstiaulyaa@gmail.com')
+    //     ->setSubject('Hai')
+    //     ->setTextBody('<b>hallo guys</b>')
+    //     ->send();
+    // }
     // public function actionDownload()
     // {
     //     return \Yii::$app->response->sendFile('path/to/file.txt');
@@ -211,7 +214,7 @@ class SiteController extends Controller
             $user->id_user_role = 2;
             $user->status = 1;
             // token berfungsi untuk membedakan atau menjadikan identitas sebuah user. untuk mengamankan sebuah transaksi.
-            $user->token = Yii::$app->getSecurity()->generateRandomString ( $length = 50 );
+            $user->token = Yii::$app->getSecurity()->generateRandomString(100);
             $user->save();
 
             // if($user->save()) {
@@ -232,99 +235,42 @@ class SiteController extends Controller
         $model = new Forget();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if (!$model->sendEmail()) {
+            if (!$model->Email()) {
                 Yii::$app->session->setFlash('Gagal', 'Email tidak ditemukan');
                 return $this->refresh();
             }
             else
             {
                 Yii::$app->session->setFlash('Berhasil', 'Cek Email Anda');
-                return $this->redirect('site/login');
+                return $this->redirect(['site/login']);
             }
         }
         return $this->render('forget', [
             'model' => $model,
         ]);
     }
+
+    public function actionNewPassword($token)
+    {
+        $this->layout = 'main-login';
+        $model = new NewPassword();
+
+        // Untuk mendapatkan token yang ada di tabel user yang dimana sudah di relasikan di anggota model
+        $user = User::findOne(['token' => $token]);
+
+        if ($user === null) {
+            throw new NotFoundHttpException("Halaman tidak ditemukan", 404);
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $user->password = Yii::$app->getSecurity()->generatePasswordHash($model->new_password);
+            $user->token = Yii::$app->getSecurity()->generateRandomString(50);
+            $user->save();
+            return $this->redirect(['site/login']);
+        }
+
+        return $this->render('new_password', [
+            'model' => $model,
+        ]);
+    }
 }
-
-    // public function actionReset()
-    // {
-    //     $this->layout = 'main-login';
-    //     $model=$this->loadModel(Yii::app()->user->id);
-
-    //     if(isset($_POST['oldpassword'],$_POST['newpassword']))
-    //     {   
-
-    //         if($model->validatePassword($_POST['oldpassword']))
-    //         {
-    //             $dua=$_POST['newpassword'];
-    //             $model->saltPassword=$model->generateSalt();
-    //             $model->password=md5($model->saltPassword.$dua);
-    //             $model->save(false);
-    //                 $this->redirect(array('index','id'=>$model->id));
-    //         }
-    //     }
-
-    //     $this->render('reset',array(
-    //         'model'=>$model,
-    //     ));
-    // }
-
-    // public function getToken($token)
-    // {
-    //     $model=Users::model()->findByAttributes(array('token'=>$token));
-    //     if($model===null)
-    //         throw new CHttpException(404,'The requested page does not exist.');
-    //     return $model;
-    // }
-
-
-    // public function actionVerToken($token)
-    // {
-    //     $model=$this->getToken($token);
-    //     if(isset($_POST['Ganti']))
-    //     {
-    //         if($model->token==$_POST['Ganti']['tokenhid']){
-    //             $model->password=md5($_POST['Ganti']['password']);
-    //             $model->token="null";
-    //             $model->save();
-    //             Yii::app()->user->setFlash('ganti','<b>Password has been successfully changed! please login</b>');
-    //             $this->redirect('?r=site/login');
-    //             $this->refresh();
-    //         }
-    //     }
-    //     $this->render('verifikasi',array(
-    //         'model'=>$model,
-    //     ));
-    // }
-
-        // if (isset($_POST['Lupa']) && isset($_POST['Lupa']['email'])) {
-        //     $getEmail=$_POST['Lupa']['email'];
-        //     $getModel= Users::model()->findByAttributes(array('email'=>$getEmail));
-        //     if(isset($_POST['Lupa']))
-        //     {
-        //         $getToken=rand(0, 99999);
-        //         $getTime=date("H:i:s");
-        //         $getModel->token=md5($getToken.$getTime);
-        //         $namaPengirim="Owner Perpus JJ";
-        //         $emailadmin="samsulaculhadi@gmail.com";
-        //         $subjek="Reset Password";
-        //         $setpesan="kamu berhasil reset password<br/>
-        //         <a href='http://yourdomain.com/index.php?r=site/vertoken/view&token=".$getModel->token."'>Click Here to Reset Password</a>";
-        //         if($getModel->validate())
-        //         {
-        //             $name='=?UTF-8?B?'.base64_encode($namaPengirim).'?=';
-        //             $subject='=?UTF-8?B?'.base64_encode($subjek).'?=';
-        //             $headers="From: $name <{$emailadmin}>\r\n".
-        //             "Reply-To: {$emailadmin}\r\n".
-        //             "MIME-Version: 1.0\r\n".
-        //             "Content-type: text/html; charset=UTF-8";
-        //             $getModel->save();
-        //             Yii::app()->user->setFlash('forgot','link to reset your password has been sent to your email');
-        //             mail($getEmail,$subject,$setpesan,$headers);
-        //             $this->refresh();
-        //         }
-        //     }
-        // }
-        // $this->render('forgot');

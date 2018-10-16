@@ -62,6 +62,11 @@ class Anggota extends \yii\db\ActiveRecord
             return \yii\helpers\ArrayHelper::map(Anggota::find()->andWhere(['id' => Yii::$app->user->identity->id_anggota])->all(), 'id', 'nama');
         }
     }
+    // Relasi dengan User
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id_anggota' => 'id']);
+    }
     // public function getManyBuku()
     // {
     //     return $this->hasMany(Buku::class, ['id_anggota' => 'id']);

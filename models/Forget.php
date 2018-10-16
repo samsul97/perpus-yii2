@@ -31,7 +31,7 @@ class Forget extends Model
     }
 
     // Kirim cek email ada tidak di databases.
-    public function sendEmail()
+    public function Email()
     {
         $model = Anggota::findOne(['email' => $this->email]);
 
@@ -40,7 +40,7 @@ class Forget extends Model
             Yii::$app->mail->compose('@app/template/passwordemail',['model' => $model])
                 ->setFrom('samsulaculhadi@gmail.com')
                 ->setTo($this->email)
-                ->setSubject('New Password - Perpustakaan')
+                ->setSubject('New Password - PerpusJJ')
                 ->send();
 
             return true;

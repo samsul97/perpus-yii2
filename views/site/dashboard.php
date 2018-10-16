@@ -16,6 +16,8 @@ use app\models\User;
 $this->title = 'Statistik Perpustakaan';
 ?>
 
+
+<?= Yii::$app->getSecurity()->generatePasswordHash("Fauzan") ?>
 <?php if (Yii::$app->user->identity->id_user_role == 1): ?>
   <div class="site-index">
     <small>Welcome to dashboard perpustakaan. Silahkan kelola perpustakaan dengan baik.</small>
