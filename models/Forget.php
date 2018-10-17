@@ -16,7 +16,7 @@ class Forget extends Model
 {
     public $email;
     public $token;
-    public $verifyCode;
+    // public $verifyCode;
 
     /**
      * @return array the validation rules.
@@ -26,7 +26,6 @@ class Forget extends Model
         return [
             [['email'], 'required'],
             [['token'], 'safe'],
-            ['verifyCode', 'captcha'],
         ];
     }
 
@@ -40,7 +39,7 @@ class Forget extends Model
             Yii::$app->mail->compose('@app/template/passwordemail',['model' => $model])
                 ->setFrom('samsulaculhadi@gmail.com')
                 ->setTo($this->email)
-                ->setSubject('New Password - PerpusJJ')
+                ->setSubject('Reset Password - PerpusJJ')
                 ->send();
 
             return true;

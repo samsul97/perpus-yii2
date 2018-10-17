@@ -15,7 +15,7 @@ class NewPassword extends Model
 {
     public $new_password;
     public $confirmation_password;
-    public $verifyCode;
+    // public $verifyCode;
 
     /**
      * @return array the validation rules.
@@ -25,7 +25,7 @@ class NewPassword extends Model
         return [
             [['new_password'], 'required'],
             ['confirmation_password', 'compare', 'compareAttribute' => 'new_password','message' => '{attribute} Password tidak sama'],
-            ['verifyCode', 'captcha'],
+            // ['verifyCode', 'captcha'],
         ];
     }
 }

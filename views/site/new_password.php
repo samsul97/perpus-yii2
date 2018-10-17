@@ -1,13 +1,13 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\captcha\Captcha;
+// use yii\captcha\Captcha;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
 
-$this->title = 'New Password';
+$this->title = 'Reset Password';
 
 $gembok = [
     'options' => ['class' => 'form-group has-feedback'],
@@ -29,14 +29,12 @@ $gembok = [
         <?= $form
             ->field($model, 'new_password', $gembok)
             ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('new password')]) ?>
+            ->passwordInput(['placeholder' => $model->getAttributeLabel('Password Baru')]) ?>
 
         <?= $form
             ->field($model, 'confirmation_password', $gembok)
             ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('confirmation password')]) ?>
-
-        <?= $form->field($model, 'verifyCode')->widget(Captcha::className()) ?>
+            ->passwordInput(['placeholder' => $model->getAttributeLabel('Ketik Ulang Password')]) ?>
 
         <div class="row">
             <!-- /.col -->
