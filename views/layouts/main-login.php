@@ -1,11 +1,12 @@
 <?php
 use backend\assets\AppAsset;
 use yii\helpers\Html;
-
+use dmstr\widgets\Alert;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 dmstr\web\AdminLteAsset::register($this);
+app\assets\AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -17,12 +18,10 @@ dmstr\web\AdminLteAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="login-page">
-
+<body class="bimg">
 <?php $this->beginBody() ?>
-
-    <?= $content ?>
-
+<?= Alert::widget() ?>
+	<?= $content ?>
 <?php $this->endBody() ?>
 </body>
 </html>

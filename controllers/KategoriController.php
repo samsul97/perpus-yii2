@@ -67,6 +67,7 @@ class KategoriController extends Controller
         $model = new Kategori();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Berhasil menambahkan kategori');
             return $this->redirect(['index', 'id' => $model->id]);
         }
 
@@ -87,7 +88,8 @@ class KategoriController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', 'Data berhasil di perbaharui');
+            return $this->redirect(['index', 'id' => $model->id]);
         }
 
         return $this->render('update', [

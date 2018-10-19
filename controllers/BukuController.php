@@ -121,7 +121,7 @@ class BukuController extends Controller
 
             $sampul->saveAs(Yii::$app->basePath. '/web/upload/sampul/' . $model->sampul);
             $berkas->saveAs(Yii::$app->basePath. '/web/upload/berkas/' . $model->berkas);
-
+            Yii::$app->session->setFlash('success', 'Berhasil menambahkan buku');
             return $this->redirect(['index', 'id' => $model->id]);
         }
 
@@ -165,11 +165,10 @@ class BukuController extends Controller
             } else{
                 $model->berkas = $berkas_lama;
             }
-
             // false itu untuk ....
             $model->save(false);
-
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', 'Data berhasil di perbaharui');
+            return $this->redirect(['index', 'id' => $model->id]);
         }
 
         return $this->render('update', [

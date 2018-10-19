@@ -49,4 +49,5 @@ class Registrasi extends Model
             ['verifyCode', 'captcha'],
         ];
     }
+    
 }

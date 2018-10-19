@@ -15,15 +15,91 @@ use app\models\User;
 
 $this->title = 'Statistik Perpustakaan';
 ?>
-
-
 <?= Yii::$app->getSecurity()->generatePasswordHash("Fauzan") ?>
+<br>
+<?php 
+$session= Yii::$app->session;
+$session->set('language', 'en-US');
+echo $session['language'];
+?>
+<br>
+<?php
+$cookies = Yii::$app->request->cookies;
+$language = $cookies->getValue('language', 'en');
+echo $cookies['language'];
+?>
+<?php $cache['language'] = 'en';
+echo $cache['language'];?>
+
 <?php if (Yii::$app->user->identity->id_user_role == 1): ?>
   <div class="site-index">
     <small>Welcome to dashboard perpustakaan. Silahkan kelola perpustakaan dengan baik.</small>
     <br>
     <br>
     <div class="row" style="margin: 3px;">
+      <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <p>Jumlah Anggota</p>
+
+                    <h3><?= Yii::$app->formatter->asInteger(Anggota::getCount()); ?></h3>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-user"></i>
+                </div>
+                <a href="<?=Url::to(['anggota/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-blue">
+                <div class="inner">
+                    <p>Jumlah Petugas</p>
+
+                    <h3><?= Yii::$app->formatter->asInteger(Petugas::getCount()); ?></h3>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-users"></i>
+                </div>
+                <a href="<?=Url::to(['petugas/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-gray">
+                <div class="inner">
+                    <p>Jumlah User</p>
+
+                    <h3><?= Yii::$app->formatter->asInteger(Kategori::getCount()); ?></h3>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-users"></i>
+                </div>
+                <a href="<?=Url::to(['user/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-white">
+                <div class="inner">
+                    <p>Jumlah Penulis</p>
+
+                    <h3><?= Yii::$app->formatter->asInteger(Penulis::getCount()); ?></h3>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-user"></i>
+                </div>
+                <a href="<?=Url::to(['penulis/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-blue">
@@ -77,6 +153,7 @@ $this->title = 'Statistik Perpustakaan';
         </div>
       </div><!-- ./col -->
     </div>
+
 
 
     <div class="row">

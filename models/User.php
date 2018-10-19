@@ -53,7 +53,8 @@ class user extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
             [['username', 'password'], 'required'],
             [['id_anggota', 'id_petugas', 'id_user_role', 'status'], 'integer'],
             [['username'], 'string', 'max' => 255],
-            [['password'], 'string', 'max' => 25],
+            [['password'], 'string', 'max' => 255],
+            // password varchar harus 255 sama di database juga;
         ];
     }
 
@@ -81,7 +82,7 @@ class user extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
         return static::findOne(['access_token' => $token]);
     }
     public function getId()
-    {
+    {   
         return $this->id;
     }
     public function getAuthKey()
@@ -98,7 +99,8 @@ class user extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
     }
     public function validatePassword($password)
     {
-        return $this->password == $password;
+        // return $this->password == $password;
+        return Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
     public static function isAdmin()
     {

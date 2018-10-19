@@ -111,12 +111,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'berkas',
                         'format' => 'raw',
-                        'contentOptions' => ['style' => 'text-align:center'],
+                        'contentOptions' => ['style' => 'text-align:center; width:80px'],
                         'headerOptions' => ['style' => 'text-align:center', 'width' => '20'],
                         'value' => function ($model)
                         {
                             if ($model->berkas !== '') {
-                                return '<a href="' . yii::$app->request->baseUrl.'/upload/berkas/'.'"><div align="center"><button class="btn btn-success glyphicon glyphicon-download-alt" type="submit"></button></div></a>';
+                                return '<a href="' . yii::$app->request->baseUrl.'/upload/berkas/' . $model->berkas .'"><div align="center"><button class="btn btn-success glyphicon glyphicon-download-alt" type="submit"></button></div></a>';
                             }
                             else{
                                 return '<div align="center"><h1>File tidak ada</h1></div>';

@@ -30,9 +30,9 @@ class Peminjaman extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_buku', 'id_anggota', 'tanggal_pinjam', 'tanggal_kembali'], 'required'],
+            [['id_buku', 'id_anggota', 'tanggal_pinjam', 'tanggal_kembali', 'status_buku'], 'required'],
             [['id_buku', 'id_anggota'], 'integer'],
-            [['tanggal_pinjam', 'tanggal_kembali'], 'safe'],
+            [['tanggal_pinjam', 'tanggal_kembali', 'tanggal_pengembalian_buku'], 'safe'],
         ];
     }
 
@@ -46,7 +46,8 @@ class Peminjaman extends \yii\db\ActiveRecord
             'id_buku' => 'Buku',
             'id_anggota' => 'Anggota',
             'tanggal_pinjam' => 'Tanggal Pinjam',
-            'tanggal_kembali' => 'Tanggal Kembali',
+            'status_buku' => 'Status Buku',
+            'tanggal_pengembalian_buku' => 'Tanggal Pengembalian Buku',
         ];
     }
     public static function getCount()
@@ -77,4 +78,5 @@ class Peminjaman extends \yii\db\ActiveRecord
         }
         return $data;
     }
+    
 }

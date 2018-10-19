@@ -30,7 +30,8 @@ use dmstr\widgets\Alert;
     </section>
 
     <section class="content">
-        <?= Alert::widget() ?>
+        <?= Alert::widget([
+   'options' => ['class' => 'alert-info']]); ?>
         <?= $content ?>
     </section>
 </div>

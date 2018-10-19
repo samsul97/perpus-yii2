@@ -31,7 +31,7 @@ $config = [
             'cookieValidationKey' => 'KIDZY2IxshHmWjt03FR9I3CaICWqBJYD',
         ],
         'urlManager' => [
-            'enablePrettyUrl' => false,
+            'enablePrettyUrl' => true,
             'showScriptName' => false,
             /*'rules' => [
                 '' => 'site/index',

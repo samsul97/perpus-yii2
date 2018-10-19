@@ -67,6 +67,7 @@ class PenerbitController extends Controller
         $model = new Penerbit();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Berhasil menambahkan penerbit');
             return $this->redirect(['index', 'id' => $model->id]);
         }
 
@@ -87,7 +88,8 @@ class PenerbitController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', 'Data berhasil di perbaharui');
+            return $this->redirect(['index', 'id' => $model->id]);
         }
 
         return $this->render('update', [

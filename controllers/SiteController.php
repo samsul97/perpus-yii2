@@ -209,13 +209,14 @@ class SiteController extends Controller
             $user->id_anggota = $anggota->id;
             $user->id_user_role = $anggota->id;
             $user->username = $model->username;
-            $user->password = $model->password;
+            $user->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
             $user->id_petugas = 0;
             $user->id_user_role = 2;
             $user->status = 1;
             // token berfungsi untuk membedakan atau menjadikan identitas sebuah user. untuk mengamankan sebuah transaksi.
             $user->token = Yii::$app->getSecurity()->generateRandomString(100);
             $user->save();
+            Yii::$app->session->setFlash('success', 'Berhasil Registrasi. Silahkan Login.');
 
             // if($user->save()) {
             //     Yii::$app->session->setFlash('success','Data berhasil disimpan.');
@@ -236,7 +237,7 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if (!$model->Email()) {
-                Yii::$app->session->setFlash('Gagal', 'Email tidak ditemukan');
+                Yii::$app->session->setFlash('warning', 'Email tidak ditemukan');
                 return $this->refresh();
             }
             else
