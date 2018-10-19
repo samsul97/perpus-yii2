@@ -17,6 +17,7 @@ app\assets\AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link rel="shortcut icon" href="<?= Yii::getAlias('@web').'/images/images.jpg'; ?>">
 </head>
 <body class="bimg">
 <?php $this->beginBody() ?>
