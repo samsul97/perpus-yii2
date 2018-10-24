@@ -22,7 +22,7 @@
         "kartik-v/yii2-widget-select2": "^2.1",
         "kartik-v/yii2-widget-fileinput": "^1.0",
         "kartik-v/yii2-mpdf": "^1.0",
-        "miloschuman/yii2-highcharts-widget": "^6.0",
+        "miloschuman/yii2-highcharts-widget": "*",
         "tinymce/tinymce": "^4.8",
         "2amigos/yii2-tinymce-widget": "^1.1",
         "deesoft/yii2-console": "~1.0",
@@ -32,7 +32,11 @@
         "kartik-v/yii2-widget-datepicker": "^1.4",
         "phpoffice/phpspreadsheet": "^1.4",
         "phpoffice/phpword": "^0.15.0",
-        "phpoffice/phpexcel": "^1.8"
+        "phpoffice/phpexcel": "^1.8",
+        "kartik-v/yii2-number": "^1.0",
+        "yiisoft/yii2-authclient": "^2.1",
+        "kartik-v/yii2-widgets": "dev-master",
+        "dektrium/yii2-user": "0.9.*@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

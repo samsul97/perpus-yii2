@@ -11,6 +11,7 @@ use app\models\Kategori;
 use app\models\Penulis;
 use miloschuman\highcharts\Highcharts;
 use app\models\User;
+
 /* @var $this yii\web\View */
 
 $this->title = 'Statistik Perpustakaan';
@@ -487,7 +488,7 @@ echo $cache['language'];?>
             ],
             'series' => [
               [
-                'type' => 'pie',
+                'type' => 'bar',
                 'name' => 'Peminjaman',
                 'data' => Peminjaman::getGrafikList(),
               ],

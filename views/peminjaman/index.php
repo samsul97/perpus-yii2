@@ -104,9 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <!-- <h1><?= Html::encode($this->title) ?></h1> -->
                 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-                <?php if (User::isAnggota()): ?>
-                    <?= Html::a('Tambah Peminjaman', ['create'], ['class' => 'btn btn-success btn-sm w-100 mt-2 mb-3']) ?>
-                <?php endif ?>
+                
 
                 <?php if (Yii::$app->user->identity->id_anggota): ?>
 
@@ -169,58 +167,45 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
 
                             [
-                        'attribute' => 'status_buku',
-                        'value' => function ($model) {
-                            if ($model->status_buku == 0) {
-                                return "Belum Di Kembalikan";
-                            };
-                            if ($model->status_buku == 1) {
-                                return "Sedang Di Pinjam";
-                            };
-                            if ($model->status_buku == 2) {
-                                return "Sudah Di Kembalikan";
-                            };
-                        },
-                        'filter'=>[
-                            0 => 'Belum Di Kembalikan',
-                            1 => 'Sedang Di Pinjam',
-                            2 => 'Sudah Di Kembalikan',
-                        ],
-                    ],
+                                'attribute' => 'status_buku',
+                                'value' => function ($model) {
+                                    if ($model->status_buku == 0) {
+                                        return "Belum Di Kembalikan";
+                                    };
+                                    if ($model->status_buku == 1) {
+                                        return "Sedang Di Pinjam";
+                                    };
+                                    if ($model->status_buku == 2) {
+                                        return "Sudah Di Kembalikan";
+                                    };
+                                },
+                                'filter'=>[
+                                    0 => 'Belum Di Kembalikan',
+                                    1 => 'Sedang Di Pinjam',
+                                    2 => 'Sudah Di Kembalikan',
+                                ],
+                            ],
                     //'tanggal_pengembalian_buku',
+                            [
+                                'attribute'=>'tanggal_pengembalian_buku',
+                                'filter'=>DatePicker::widget([
+                                    'model'=>$searchModel,
+                                    'attribute'=>'tanggal_pengembalian_buku',
+                                    'pluginOptions'=>[
+                                        'format' => 'yyyy-mm-dd'
+                                    ]
+                                ])
+                            ],
                     [
-                        'attribute'=>'tanggal_pengembalian_buku',
-                        'filter'=>DatePicker::widget([
-                            'model'=>$searchModel,
-                            'attribute'=>'tanggal_pengembalian_buku',
-                            'pluginOptions'=>[
-                                'format' => 'yyyy-mm-dd'
-                            ]
-                        ])
+                        
+                        'class' => 'yii\grid\ActionColumn',
+                        'template' => '{kembalikan}',
+                        'buttons' => [
+                            'kembalikan' => function($url, $model, $key) {
+                                return Html::a('<i class="fa fa-arrow-left"></i>', ['kembalikan-buku', 'id' => $model->id], ['data' => ['confirm' => 'Apa anda yakin ingin mengembalikan Buku ini?'],]);
+                            }
+                        ]
                     ],
-                    // [
-                    //     // 'class' => 'yii\grid\ActionColumn',
-                    //     'label' => 'Kembalikan Buku',
-                    //     'template' => '{kembalikan}',
-                    //     'buttons' => [
-                    //         'kembalikan' => function($url, $model, $key) {
-                    //             return Html::a('<i class="fa fa-arrow-left"></i>', ['kembalikan-buku', 'id' => $model->id], ['data' => ['confirm' => 'Apa anda yakin ingin mengembalikan Buku ini?'],]);
-                    //         }
-                    //     ]
-                    // ],
-
-                    // if (User::isAdmin()) {
-                    //     [
-                    //         'class' => 'yii\grid\ActionColumn',
-                    //         'contentOptions' => ['style' => 'text-align:center']
-                    //     ]
-                    // }
-                    // else
-                    // {
-                    //     return true;
-                    // };
-                    // 'tanggal_kembali',
-
                         ],
                     ]); ?>
                 <?php endif ?>

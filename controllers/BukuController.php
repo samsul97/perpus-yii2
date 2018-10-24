@@ -37,13 +37,14 @@ class BukuController extends Controller
                 'only' => ['logout', 'index'],
                 'rules' => [
                     [
-                        'actions' => ['view', 'create', 'index'],
+                        'actions' => ['view', 'create', 'index', 'ExportWord', 'ExportWord2'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function() {
                             return User::isAdmin() || User::isPetugas();
                         }
                     ],
+                    // true berarti bisa mengakses.
                     [
                         'actions' => ['index', 'create'],
                         'allow' => false,
@@ -53,6 +54,7 @@ class BukuController extends Controller
                             return User::isAnggota();
                         },
                     ],
+                    // false berarti tidak bisa mengakses
                     // [
                     //     'actions' => ['index', 'create', 'update'],
                     //     'allow' => true,
@@ -112,6 +114,8 @@ class BukuController extends Controller
         $model = new Buku();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // var_dump($model->load(Yii::$app->request->post()));
+            // die;
             $sampul = UploadedFile::getInstance($model, 'sampul');
             $berkas = UploadedFile::getInstance($model, 'berkas');
 
@@ -124,6 +128,7 @@ class BukuController extends Controller
             Yii::$app->session->setFlash('success', 'Berhasil menambahkan buku');
             return $this->redirect(['index', 'id' => $model->id]);
         }
+        
 
         return $this->render('create', [
             'model' => $model,
@@ -681,7 +686,8 @@ public function actionExportWord2()
     $xmlWriter = IOFactory::createWriter($phpWord, 'Word2007');
     $xmlWriter->save($path);
     return $this->redirect($path);
-        // var_dump($path);
+        // var_dump($xmlWriter);
+        // die;
         // print getcwd($path);
 }
 

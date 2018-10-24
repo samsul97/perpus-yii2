@@ -1,5 +1,6 @@
 <?php
 
+use kartik\number\NumberControl;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
@@ -9,13 +10,27 @@ use app\models\Kategori;
 use yii\helpers\ArrayHelper;
 use kartik\file\fileInput;
 use dosamigos\tinymce\TinyMce;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Buku */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="buku-form">
-
+<?php
+$dispOptions = ['class' => 'form-control kv-monospace', 'tabindex' => 1000];
+$saveOptions = [
+    'type' => 'text', 
+    'label'=>'<label>Saved Value: </label>', 
+    'class' => 'kv-saved',
+    'readonly' => true,
+    'tabindex' => 1000,
+    'tag' => 'div',
+    'class' => ''
+];
+ 
+$saveCont = ['class' => 'kv-saved-cont'];
+?>
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
@@ -82,6 +97,21 @@ use dosamigos\tinymce\TinyMce;
             'options' => ['multiple' => true],
         ]);
     ?>
+
+    <?= $form->field($model, 'harga')->widget(NumberControl::classname(), [
+        'data' => 'number-decimal',
+        'options' => $saveOptions,
+        'maskedInputOptions' => [
+            'digits' => 0,
+            'alias' => 'numeric',
+            'groupSeparator' => ',',
+            'autoGroup' => true,
+            'autoUnmask' => true,
+            'unmaskAsNumber' => true,
+        ],
+    ]); ?>
+
+    
     <br>
     <div class="form-group">
         <?= Html::submitButton('Simpan', ['class' => 'btn btn-success', 'style' => 'width:80px;']) ?>

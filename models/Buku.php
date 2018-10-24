@@ -37,7 +37,8 @@ class Buku extends \yii\db\ActiveRecord
             [['tahun_terbit'], 'safe'],
             [['id_penulis', 'id_penerbit', 'id_kategori'], 'integer'],
             [['sinopsis'], 'string'],
-            [['nama', 'sampul', 'berkas'], 'string', 'max' => 255],
+            [['nama', 'sampul', 'berkas', 'harga'], 'string', 'max' => 255],
+            // [['harga'], 'safe'],
         ];
     }
 
@@ -56,6 +57,7 @@ class Buku extends \yii\db\ActiveRecord
             'sinopsis' => 'Sinopsis',
             'sampul' => 'Sampul',
             'berkas' => 'Berkas',
+            'harga' => 'Harga',
         ];
     }
     public function getPenerbit()

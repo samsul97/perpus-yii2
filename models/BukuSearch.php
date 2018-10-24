@@ -22,6 +22,7 @@ class BukuSearch extends Buku
         return [
             [['id', 'id_penulis', 'id_penerbit', 'id_kategori'], 'integer'],
             [['nama', 'tahun_terbit', 'globalSearch', 'sinopsis', 'sampul', 'berkas'], 'safe'],
+            [['harga'], 'safe'],
         ];
     }
 
@@ -66,12 +67,14 @@ class BukuSearch extends Buku
             'id_penulis' => $this->id_penulis,
             'id_penerbit' => $this->id_penerbit,
             'id_kategori' => $this->id_kategori,
+            'harga' => $this->harga,
         ]);
 
         $query->orFilterWhere(['like', 'nama', $this->globalSearch])
             ->orFilterWhere(['like', 'sinopsis', $this->globalSearch])
             ->orFilterWhere(['like', 'sampul', $this->globalSearch])
-            ->orFilterWhere(['like', 'berkas', $this->globalSearch]);
+            ->orFilterWhere(['like', 'berkas', $this->globalSearch])
+            ->orFilterWhere(['like', 'harga', $this->globalSearch]);
 
         return $dataProvider;
     }

@@ -47,5 +47,4 @@ class Forget extends Model
         }
         return false;
     }
-
 }
