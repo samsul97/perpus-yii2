@@ -68,7 +68,7 @@ class Peminjaman extends \yii\db\ActiveRecord
     }
     public function getManyBuku()
     {
-        return $this->hasMany(Buku::class, ['id' => 'id']);
+        return $this->hasMany(Peminjaman::class, ['id_buku' => 'id']);
     }
     public static function getGrafikList()
     {
@@ -78,5 +78,4 @@ class Peminjaman extends \yii\db\ActiveRecord
         }
         return $data;
     }
-    
 }

@@ -15,10 +15,11 @@ use app\models\NewPassword;
 use app\models\Anggota;
 use app\models\Forget;
 use yii\web\NotFoundHttpException;
-
+use yii\authclient\client\Facebook;
 
 class SiteController extends Controller
 {
+    // public $successUrl = '';
     /**
      * {@inheritdoc}
      */
@@ -85,6 +86,11 @@ class SiteController extends Controller
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+            'auth' => [
+              'class' => 'yii\authclient\AuthAction',
+              'successCallback' => [$this, 'oAuthSuccess'],
+              // 'successUrl' => $this->successUrl
             ],
         ];
     }
@@ -273,5 +279,24 @@ class SiteController extends Controller
         return $this->render('new_password', [
             'model' => $model,
         ]);
+    }
+
+    public function oAuthSuccess($client) 
+    {
+    // get user data from client
+      $userAttributes = $client->getUserAttributes();
+      // $user = \app\models\User::find()
+      // ->where(['username' => $attributes['username'],])
+      // ->one();
+      // if (!empty($user)) {
+      //     Yii::$app->user->login($user);
+      // }
+      // else
+      // {
+      //   $session = Yii::$app->session;
+      //   $session['attributes'] = $attributes;
+      //   $this->successUrl = \yii\helpers\Url::to(['registrasi']);
+      // }
+    // do some thing with user data. for example with $userAttributes['email']
     }
 }

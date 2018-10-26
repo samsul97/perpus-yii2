@@ -202,7 +202,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '{kembalikan}',
                         'buttons' => [
                             'kembalikan' => function($url, $model, $key) {
-                                return Html::a('<i class="fa fa-arrow-left"></i>', ['kembalikan-buku', 'id' => $model->id], ['data' => ['confirm' => 'Apa anda yakin ingin mengembalikan Buku ini?'],]);
+                                return Html::a('<i class="fa fa-arrow-left"></i>', ['peminjaman/kembalikan-buku', 'id' => $model->id], ['data' => ['confirm' => 'Apa anda yakin ingin mengembalikan Buku ini?'],]);
                             }
                         ]
                     ],

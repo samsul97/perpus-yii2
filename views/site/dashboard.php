@@ -482,13 +482,14 @@ echo $cache['language'];?>
             'title' => ['text' => 'PEMINJAMAN BUKU'],
             'exporting' => ['enabled' => true],
             'plotOptions' => [
-              'pie' => [
+              'bar' => [
                 'cursor' => 'pointer',
+                // 'showInLegend'=>true,
               ],
             ],
             'series' => [
               [
-                'type' => 'bar',
+                'type' => 'column',
                 'name' => 'Peminjaman',
                 'data' => Peminjaman::getGrafikList(),
               ],

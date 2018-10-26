@@ -67,7 +67,7 @@ class Penerbit extends \yii\db\ActiveRecord
     }
     public function getManyBuku()
     {
-        return $this->hasMany(Buku::class, ['id_penulis' => 'id']);
+        return $this->hasMany(Buku::class, ['id_penerbit' => 'id']);
     }
     public static function getGrafikList()
     {

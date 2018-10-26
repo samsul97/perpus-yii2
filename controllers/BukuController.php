@@ -37,7 +37,7 @@ class BukuController extends Controller
                 'only' => ['logout', 'index'],
                 'rules' => [
                     [
-                        'actions' => ['view', 'create', 'index', 'ExportWord', 'ExportWord2'],
+                        'actions' => ['view', 'create', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function() {
@@ -213,6 +213,7 @@ class BukuController extends Controller
 
     public function actionExportWord()
     {
+
         $phpWord = new phpWord();
         $section = $phpWord->addSection(
             [
@@ -272,18 +273,33 @@ class BukuController extends Controller
             $table->addCell(500)->addText($nomor++, null, $headerStyle, $paragraphCenter);
             $table->addCell(5000)->addText($buku->nama, null);
             $table->addCell(5000)->addText($buku->tahun_terbit, null, $paragraphCenter);
-            $table->addCell(5000)->addText(@$buku->penulis->nama, null, $paragraphCenter);
-            $table->addCell(5000)->addText(@$buku->penerbit->nama, null, $paragraphCenter);
-            $table->addCell(5000)->addText(@$buku->kategori->nama, null, $paragraphCenter);
+            $table->addCell(3000)->addText(@$buku->penulis->nama, null, $paragraphCenter);
+            $table->addCell(3000)->addText(@$buku->penerbit->nama, null, $paragraphCenter);
+            $table->addCell(3000)->addText(@$buku->kategori->nama, null, $paragraphCenter);
             $table->addCell(5000)->addText($buku->sinopsis, null);
         }
-        $filename = time() . 'Data-Buku.docx';
-        $path = 'export/ ' . $filename;
-        $xmlWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $xmlWriter->save($path);
-        return $this->redirect($path);
+        // $filename = time() . 'Data-Buku.docx';
+        // // echo "$path";
+        // // die;
+        // $xmlWriter = IOFactory::createWriter($phpWord, 'Word2007');
+        // $xmlWriter->save($filename);
+        // // return $this->redirect($path);
         // var_dump($path);
         // print getcwd($path);
+        // return $this->redirect(['buku/index']);
+        // header('Content-Type: application/vnd.ms-excel');
+        // header('Content-Disposition: attachment;filename="download.docx"');
+        // header('Cache-Control: max-age=0');
+        // $writer->save('php://output');
+         $filename = time().'_Data_buku.docx';
+        header("Content-Description: File Transfer");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Expires: 0');
+        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $xmlWriter->save("php://output"); 
     }
 
     public function actionExportPdf() 
@@ -325,7 +341,7 @@ class BukuController extends Controller
     $writer = new Xlsx($spreadsheet);
 
     header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment;filename="download.xlsx"');
+    header('Content-Disposition: attachment;filename="databuku.xlsx"');
     header('Cache-Control: max-age=0');
     $writer->save('php://output');
 
@@ -681,14 +697,23 @@ public function actionExportWord2()
     //     $section->addText(@$buku->kategori->nama, null, $paragraphCenter);
     //     $section->addText($buku->sinopsis, null);
     // }
-    $filename = time() . 'Surat-ortu.docx';
-    $path = 'export/ ' . $filename;
-    $xmlWriter = IOFactory::createWriter($phpWord, 'Word2007');
-    $xmlWriter->save($path);
-    return $this->redirect($path);
+    // $filename = time() . 'Surat-ortu.docx';
+    // $path = 'export/ ' . $filename;
+    // $xmlWriter = IOFactory::createWriter($phpWord, 'Word2007');
+    // $xmlWriter->save($path);
+    // return $this->redirect($path);
         // var_dump($xmlWriter);
         // die;
         // print getcwd($path);
+    $filename = time().'_Data_buku.docx';
+        header("Content-Description: File Transfer");
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Expires: 0');
+        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $xmlWriter->save("php://output");
 }
 
 }

@@ -34,7 +34,7 @@
         "phpoffice/phpword": "^0.15.0",
         "phpoffice/phpexcel": "^1.8",
         "kartik-v/yii2-number": "^1.0",
-        "yiisoft/yii2-authclient": "^2.1",
+        "yiisoft/yii2-authclient": "*",
         "kartik-v/yii2-widgets": "dev-master",
         "dektrium/yii2-user": "0.9.*@dev"
     },

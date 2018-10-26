@@ -37,8 +37,10 @@ class Buku extends \yii\db\ActiveRecord
             [['tahun_terbit'], 'safe'],
             [['id_penulis', 'id_penerbit', 'id_kategori'], 'integer'],
             [['sinopsis'], 'string'],
-            [['nama', 'sampul', 'berkas', 'harga'], 'string', 'max' => 255],
-            // [['harga'], 'safe'],
+            [['nama', 'harga'], 'string', 'max' => 255],
+            [['sampul'], 'file', 'extensions'=>'jpg, gif, png', 'maxSize'=>5218288, 'tooBig' => 'batas limit upload gambar 5mb'
+            ],
+            [['berkas'], 'file', 'extensions'=>'docx, doc, pdf, xls'],
         ];
     }
 

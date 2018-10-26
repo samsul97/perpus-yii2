@@ -105,7 +105,7 @@ class PeminjamanController extends Controller
                 ->setSubject('Pemberitahuan - PerpusJJ')
                 ->send();
             $model->save();
-            Yii::$app->session->setFlash('success', 'Berhasil pinjam buku');
+            Yii::$app->session->setFlash('success', 'Berhasil pinjam buku. Silahkan cek email anda.');
             return $this->redirect(['index']);
         }
         
@@ -174,7 +174,7 @@ class PeminjamanController extends Controller
 
         $model->save();
 
-        Yii::$app->session->setFlash('Berhasil', 'Buku sudah berhasil di kembalikan');
+        Yii::$app->session->setFlash('Berhasil', 'Buku telah berhasil di kembalikan');
         return $this->redirect(['peminjaman/index']);
     }
 }
