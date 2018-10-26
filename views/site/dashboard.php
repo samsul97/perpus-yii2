@@ -470,34 +470,37 @@ echo $cache['language'];?>
         ]);?>
       </div>
     </div>
-
+<br>
+<br>
+<br>
     <div class="col-sm-6">
-      <div class="box-header with-border">
-        <h3 class="box-title">Buku Berdasarkan Peminjaman</h3>
-      </div>
-      <div class="box-body">
-        <?=Highcharts::widget([
-          'options' => [
-            'credits' => false,
-            'title' => ['text' => 'PEMINJAMAN BUKU'],
-            'exporting' => ['enabled' => true],
-            'plotOptions' => [
-              'bar' => [
-                'cursor' => 'pointer',
-                // 'showInLegend'=>true,
-              ],
-            ],
-            'series' => [
-              [
-                'type' => 'column',
-                'name' => 'Peminjaman',
-                'data' => Peminjaman::getGrafikList(),
-              ],
-            ],
-          ],
-        ]);?>
-      </div>
-    </div>
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Grafik Peminjaman Buku</h3>
+                </div>
+                <div class="box-body">
+                    <?= \miloschuman\highcharts\Highcharts::widget([
+                    'options' => [
+                        'credits' => true,
+                        'title' => ['text' => 'ANGKA DATA PEMINJAMAN BUKU PERBULAN'],
+                        'exporting' => ['enabled' => true],
+                        'xAxis' => [
+                            'categories' => \app\components\Helper::getListBulanGrafik(),
+                        ],
+                        'series' => [
+                            [
+                                'type' => 'column',
+                                'colorByPoint' => true,
+                                'name' => 'Peminjaman',
+                                'data' => \app\models\Peminjaman::getCountGrafik(),
+                                'showInLegend' => false
+                            ],
+                        ],
+                    ]
+                ]) ?>
+                </div>
+            </div>
+        </div>
   </div>
 </div>
 </div>

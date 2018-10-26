@@ -66,16 +66,36 @@ class Peminjaman extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Buku::class, ['id' => 'id_buku']);
     }
-    public function getManyBuku()
+    public static function getListBulanGrafik()
     {
-        return $this->hasMany(Peminjaman::class, ['id_buku' => 'id']);
-    }
-    public static function getGrafikList()
-    {
-        $data = [];
-        foreach (static::find()->all() as $peminjaman) {
-            $data[] = [StringHelper::truncate($peminjaman->id_anggota, 20), (int) $peminjaman->getManyBuku()->count()];
+        $list = [];
+
+        for ($i=1; $i <= 12 ; $i++) {
+            $list[] = self::getBulanSingkat($i);
         }
-        return $data;
+
+        return $list;
+    }
+                            
+    public static function getCountGrafik()
+    {
+        $list = [];
+        for ($i = 1; $i <= 12; $i++) {
+            if (strlen($i) == 1) $i = '0' . $i;
+            $count = static::findCountGrafik($i);
+
+            $list [] = (int)@$count->count();
+
+        }
+
+        return $list;
+    }
+
+    public static function findCountGrafik($bulan)
+    {
+        $tahun = date('Y');
+        $lastDay = date("t", strtotime($tahun.'_'.$bulan));
+
+        return static::find()->andWhere(['between','tanggal_pinjam', "$tahun-$bulan-01", "$tahun-$bulan-$lastDay"]);
     }
 }
