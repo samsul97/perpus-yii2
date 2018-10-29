@@ -34,6 +34,7 @@ class Anggota extends \yii\db\ActiveRecord
             [['status_aktif'], 'integer'],
             [['nama', 'alamat'], 'string', 'max' => 255],
             [['telepon', 'email'], 'string', 'max' => 50],
+            [['foto'], 'file', 'extensions'=>'jpg, gif, png', 'maxSize'=>5218288, 'tooBig' => 'batas limit upload gambar 5mb'],
         ];
     }
 
@@ -49,6 +50,7 @@ class Anggota extends \yii\db\ActiveRecord
             'telepon' => 'Telepon',
             'email' => 'Email',
             'status_aktif' => 'Status Aktif',
+            'foto' => 'Foto',
         ];
     }
     public static function getCount()

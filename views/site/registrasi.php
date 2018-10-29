@@ -83,6 +83,7 @@ $fieldOptions6 = [
 
    <?= $form->field($model, 'verifyCode')->widget(Captcha::className()) ?>
    
+   <?= $form->field($model, 'foto')->fileInput() ?>
 
    <div class="row">
     <!-- /.col -->

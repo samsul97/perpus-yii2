@@ -16,6 +16,10 @@ use app\models\Anggota;
 use app\models\Forget;
 use yii\web\NotFoundHttpException;
 use yii\authclient\client\Facebook;
+use yii\data\ActiveDataProvider;
+use yii\widgets\ListView;
+use yii\web\UploadedFile;
+
 
 class SiteController extends Controller
 {
@@ -91,9 +95,9 @@ class SiteController extends Controller
               'class' => 'yii\authclient\AuthAction',
               'successCallback' => [$this, 'oAuthSuccess'],
               // 'successUrl' => $this->successUrl
-            ],
-        ];
-    }
+          ],
+      ];
+  }
 
     /**
      * Displays homepage.
@@ -178,21 +182,41 @@ class SiteController extends Controller
     }
     public function actionDashboard()
     {
-        if (User::isAdmin())
-        {
-            return $this->render('dashboard');
-        }
-        elseif (User::isAnggota()) {
-            return $this->render('dashboard');
-        }
-        elseif (User::isPetugas()) {
-            return $this->render('dashboard');
+
+        if (User::isAdmin() || User::isAnggota() || User::isPetugas()) {
+            $provider = new ActiveDataProvider([
+                'query' => \app\models\Buku::find(),
+                'pagination' => [
+                    'pageSize' => 6
+                ],
+                // 'sort' => [
+                //     'defaultOrder' => [
+                //         'created_at' => SORT_DESC,
+                //         'title' => SORT_ASC, 
+                //     ]
+                // ],
+            ]);
+            return $this->render('dashboard', ['provider' => $provider]);
         }
         else
         {
-            return $this->redirect(['site/login']);
+            return $this->redirect('site/login');
         }
-        // return $this->render('dashboard');
+        // if (User::isAdmin())
+        // {
+        //     return $this->render('dashboard');
+        // }
+        // elseif (User::isAnggota()) {
+        //     return $this->render('dashboard');
+        // }
+        // elseif (User::isPetugas()) {
+        //     return $this->render('dashboard');
+        // }
+        // else
+        // {
+        //     return $this->redirect(['site/login']);
+        // }
+        // // return $this->render('dashboard');
     }
     public function actionRegistrasi()
     {
@@ -206,6 +230,11 @@ class SiteController extends Controller
             $anggota->telepon = $model->telepon;
             $anggota->email = $model->email;
             $anggota->status_aktif = 1;
+
+            $foto = UploadedFile::getInstance($model, 'foto');
+            $model->foto = time(). '_' . $foto->name;
+            $foto->saveAs(Yii::$app->basePath. '/web/user/' . $model->foto);
+            $anggota->foto = $model->foto;
             $anggota->save();
 
             // if($anggota->save()) {
@@ -298,5 +327,5 @@ class SiteController extends Controller
       //   $this->successUrl = \yii\helpers\Url::to(['registrasi']);
       // }
     // do some thing with user data. for example with $userAttributes['email']
-    }
+  }
 }

@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use yii\helpers\Html;
 /**
  * This is the model class for table "user".
  *
@@ -20,22 +20,22 @@ use Yii;
 
 class user extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
 {
-     public static function getList()
-    {
-        return \yii\helpers\ArrayHelper::map(self::find()->all(), 'id', 'nama');
-    }
-    
-         //untuk menampilkan di peminjaman buku sebagai nama
-    public function getAnggota()
-    {
-        return $this->hasOne(Anggota::className(), ['id' => 'id_anggota']);
-    }
+   public static function getList()
+   {
+    return \yii\helpers\ArrayHelper::map(self::find()->all(), 'id', 'nama');
+}
 
          //untuk menampilkan di peminjaman buku sebagai nama
-    public function getPetugas()
-    {
-        return $this->hasOne(Petugas::className(), ['id' => 'id_petugas']);
-    }
+public function getAnggota()
+{
+    return $this->hasOne(Anggota::className(), ['id' => 'id_anggota']);
+}
+
+         //untuk menampilkan di peminjaman buku sebagai nama
+public function getPetugas()
+{
+    return $this->hasOne(Petugas::className(), ['id' => 'id_petugas']);
+}
     /**
      * {@inheritdoc}
      */
@@ -75,7 +75,7 @@ class user extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
             'token' => 'Token',
         ];
     }
-     public static function findIdentity($id)
+    public static function findIdentity($id)
     {
         return self::findOne($id);
     }
@@ -145,4 +145,35 @@ class user extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
         }
         return false;
     }
+
+    public static function getFotoAdmin($htmlOptions=[])
+    {
+        return Html::img('@web/images/admin.jpg', $htmlOptions);
+ }
+
+ public static function getFotoAnggota($htmlOptions=[])
+ {
+     $query = Anggota::find()
+     ->andWhere(['id' => Yii::$app->user->identity->id_anggota])
+     ->one();
+
+     if ($query->foto != null) {
+         return Html::img('@web/user/' . $query->foto, $htmlOptions);
+     } else {
+         return Html::img('@web/user/no-images.png', $htmlOptions);
+     }
+ }
+
+ public static function getFotoPetugas($htmlOptions=[])
+ {
+     $query = Petugas::find()
+     ->andWhere(['id' => Yii::$app->user->identity->id_petugas])
+     ->one();
+
+     if ($query->foto != null) {
+         return Html::img('@web/user/' . $query->foto, $htmlOptions);
+     } else {
+         return Html::img('@web/user/no-images.png', $htmlOptions);
+     }
+ }
 }

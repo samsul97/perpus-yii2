@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Buku */
 
 $this->title = 'Nama Buku : '.$model->nama;
-$this->params['breadcrumbs'][] = ['label' => 'Buku', 'url' => ['index']];
+// $this->params['breadcrumbs'][] = ['label' => 'Buku', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="buku-view">
@@ -68,7 +68,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                     ],
                     
-            'sinopsis:ntext',
+            [
+                'attribute' => 'sinopsis',
+            ],
             [
                 'label' => 'Sampul',
                 'format' => ['image', ['width' => '100']],

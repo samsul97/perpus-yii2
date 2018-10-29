@@ -20,6 +20,7 @@ class Registrasi extends Model
     public $alamat;
     public $telepon;
     public $email;
+    public $foto;
     public $verifyCode;
     // public $captcha;
     // public $recaptcha;
@@ -46,6 +47,7 @@ class Registrasi extends Model
             [['password'], 'string', 'min' => 6],
             ['telepon', 'match', 'pattern' => '/((\+[0-9]{6})|0)[-]?[0-9]{7}/', 'message' => 'Hanya dari nomor 0 sampai 9'],
             [['email'], 'unique', 'targetClass' => '\app\models\Anggota'],
+            [['foto'], 'file', 'extensions'=>'jpg, gif, png', 'maxSize'=>5218288, 'tooBig' => 'batas limit upload gambar 5mb'],
             ['verifyCode', 'captcha'],
         ];
     }

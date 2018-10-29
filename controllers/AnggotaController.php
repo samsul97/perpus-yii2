@@ -8,6 +8,7 @@ use app\models\AnggotaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * AnggotaController implements the CRUD actions for Anggota model.
@@ -87,9 +88,21 @@ class AnggotaController extends Controller
     {
         $model = $this->findModel($id);
 
+        $foto_lama = $model->foto;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $foto = UploadedFile::getInstance($model, 'foto');
+            if ($foto !== null) {
+                unlink(Yii::$app->basePath . '/web/user/' . $foto_lama);
+                $model->foto = time() . '_' . $foto->name;
+                $foto->saveAs(Yii::$app->basePath . '/web/user/' . $model->foto);
+            } else {
+                $model->foto = $foto_lama;
+            }
+
             Yii::$app->session->setFlash('success', 'Data berhasil di perbaharui');
-            return $this->redirect(['index', 'id' => $model->id]);
+            return $this->refresh();
         }
 
         return $this->render('update', [

@@ -9,7 +9,15 @@ use app\models\User;
         <!-- Sidebar user panel -->
         <div class="user-panel" style="margin-top: 10px;">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                <?php if (User::isAdmin()): ?>
+                           <?= User::getFotoAdmin(['class' => 'img-circle']); ?>
+                       <?php endif ?>
+                       <?php if (User::isAnggota()): ?>
+                           <?= User::getFotoAnggota(['class' => 'img-circle']); ?>
+                       <?php endif ?>
+                       <?php if (User::isPetugas()): ?>
+                           <?= User::getFotoPetugas(['class' => 'img-circle']); ?>
+                       <?php endif ?>
             </div>
             <div class="pull-left info">
                 <p><?= Yii::$app->user->identity->username ?></p>

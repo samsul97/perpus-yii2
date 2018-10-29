@@ -15,7 +15,7 @@ use yii\helpers\Html;
 		<button type="button" style="background: #00b894; border:none; font-size:14px; padding:15px 25px; text-align: center; font-weight: bold; color:#000000; font-color: black;">
 			<!-- <?= Html::a('Reset Password', 'http://localhost/perpus-yii2/web/index.php?r=site/new-password&token='.@$model->user->token);?> -->
 
-			<?= Html::a('New', ['site/new-password', 'token' => $model->user->token]); ?>
+			<?= Html::a('Reset Password', ['site/new-password', 'token' => $model->user->token]); ?>
 		</button>
 		<hr width="60%">
 	</center>

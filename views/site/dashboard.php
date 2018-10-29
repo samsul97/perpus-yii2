@@ -11,7 +11,7 @@ use app\models\Kategori;
 use app\models\Penulis;
 use miloschuman\highcharts\Highcharts;
 use app\models\User;
-
+use yii\widgets\LinkPager;
 /* @var $this yii\web\View */
 
 $this->title = 'Statistik Perpustakaan';
@@ -220,7 +220,7 @@ echo $cache['language'];?>
 <?php if (Yii::$app->user->identity->id_user_role == 2): ?>
   <div class="row">
 
-    <?php foreach (Buku::find()->all() as $buku) {?> 
+    <?php foreach ($provider->getModels() as $buku) {?> 
       <!-- Kolom box mulai -->
       <div class="col-md-4">
 
@@ -229,7 +229,8 @@ echo $cache['language'];?>
 
           <div class="box-header with-border">
             <div class="user-block">
-              <img class="img-circle" src="<?= Yii::getAlias('@web').'/user/user2-160x160.jpg'; ?>" alt="User Image">
+              
+              
               <span class="username"><?= Html::a($buku->nama, ['buku/view', 'id' => $buku->id]); ?></span>
               <span class="description"> Di Terbitkan : Tahun <?= $buku->tahun_terbit; ?></span>
             </div>
@@ -241,8 +242,8 @@ echo $cache['language'];?>
           </div>
 
           <div class="box-body">
-            <img class="img-responsive pad" src="<?= Yii::$app->request->baseUrl.'/upload/sampul/'.$buku['sampul']; ?>" alt="Photo">
-            <p>Sinopsis : <?= substr($buku->sinopsis,0,120);?> ...</p>
+            <img class="img-responsive pad" style="height: 300px;" src="<?= Yii::$app->request->baseUrl.'/upload/sampul/'.$buku['sampul']; ?>" alt="Photo">
+            <p>Sinopsis : <?= substr($buku->sinopsis,0,40);?> ...</p>
             <?= Html::a("<i class='fa fa-eye'> Detail Buku</i>",["buku/view","id"=>$buku->id],['class' => 'btn btn-default']) ?>
             <?= Html::a('<i class="fa fa-file"> Pinjam Buku</i>', ['peminjaman/create', 'id_buku' => $buku->id], [
               'class' => 'btn btn-primary',
@@ -263,6 +264,14 @@ echo $cache['language'];?>
     }
     ?>
 
+  </div>
+
+  <div class="row">
+    <center>
+      <?= LinkPager::widget([
+        'pagination' => $provider->pagination,
+      ]); ?>
+    </center>
   </div>
 <?php endif ?>
 
