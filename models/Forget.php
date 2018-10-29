@@ -35,15 +35,12 @@ class Forget extends Model
         $model = Anggota::findOne(['email' => $this->email]);
 
         if ($model !== null) {
-
             Yii::$app->mail->compose('@app/template/passwordemail',['model' => $model])
                 ->setFrom('samsulaculhadi@gmail.com')
                 ->setTo($this->email)
                 ->setSubject('Reset Password - PerpusJJ')
                 ->send();
-
             return true;
-
         }
         return false;
     }

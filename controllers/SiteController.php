@@ -248,7 +248,7 @@ class SiteController extends Controller
             }
             else
             {
-                Yii::$app->session->setFlash('Berhasil', 'Cek Email Anda');
+                Yii::$app->session->setFlash('success', 'Berhasil, Silahkan Cek Email Anda');
                 return $this->redirect(['site/login']);
             }
         }
@@ -271,7 +271,7 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user->password = Yii::$app->getSecurity()->generatePasswordHash($model->new_password);
-            $user->token = Yii::$app->getSecurity()->generateRandomString(50);
+            $user->token = Yii::$app->getSecurity()->generateRandomString(100);
             $user->save();
             return $this->redirect(['site/login']);
         }

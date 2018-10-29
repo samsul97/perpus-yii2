@@ -52,8 +52,9 @@ class user extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
         return [
             [['username', 'password'], 'required'],
             [['id_anggota', 'id_petugas', 'id_user_role', 'status'], 'integer'],
-            [['username'], 'string', 'max' => 255],
+            [['username', 'token'], 'string', 'max' => 255],
             [['password'], 'string', 'max' => 255],
+            
             // password varchar harus 255 sama di database juga;
         ];
     }
@@ -71,6 +72,7 @@ class user extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
             'id_petugas' => 'Petugas',
             'id_user_role' => 'Id User Role',
             'status' => 'Status',
+            'token' => 'Token',
         ];
     }
      public static function findIdentity($id)

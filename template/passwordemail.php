@@ -13,7 +13,9 @@ use yii\helpers\Html;
 		<p>Apakah anda yakin ingin merubah password akun perpustakaan anda?</p>
 		<p>Jika ingin mengubah password anda silahkan klik tombol dibawah ini.</p>
 		<button type="button" style="background: #00b894; border:none; font-size:14px; padding:15px 25px; text-align: center; font-weight: bold; color:#000000; font-color: black;">
-			<?= Html::a('New Password', 'https://localhost/perpus-yii2/web/index.php?r=site/new-password&token='.@$model->user->token);?>
+			<!-- <?= Html::a('Reset Password', 'http://localhost/perpus-yii2/web/index.php?r=site/new-password&token='.@$model->user->token);?> -->
+
+			<?= Html::a('New', ['site/new-password', 'token' => $model->user->token]); ?>
 		</button>
 		<hr width="60%">
 	</center>
