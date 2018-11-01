@@ -15,6 +15,8 @@ use Yii;
  */
 class Petugas extends \yii\db\ActiveRecord
 {
+    public $username;
+    public $password;
     /**
      * {@inheritdoc}
      */
@@ -30,8 +32,14 @@ class Petugas extends \yii\db\ActiveRecord
     {
         return [
             [['nama'], 'required'],
+            ['username', 'match', 'pattern' => '/^[a-z]\w*$/i', 'message' => 'Username tidak boleh kosong'],
+            [['password'], 'string', 'min' => 6],
             [['nama', 'alamat'], 'string', 'max' => 255],
             [['telepon', 'email'], 'string', 'max' => 50],
+            [['email'], 'email'],
+            ['telepon', 'match', 'pattern' => '/((\+[0-9]{6})|0)[-]?[0-9]{7}/', 'message' => 'Hanya dari nomor 0 sampai 9'],
+            [['foto'], 'file', 'extensions'=>'jpg, gif, png', 'maxSize'=>5218288, 'tooBig' => 'batas limit upload gambar 5mb'
+            ],
         ];
     }
 
@@ -46,6 +54,7 @@ class Petugas extends \yii\db\ActiveRecord
             'alamat' => 'Alamat',
             'telepon' => 'Telepon',
             'email' => 'Email',
+            'foto' => 'Foto',
         ];
     }
     public static function getPetugasCount()

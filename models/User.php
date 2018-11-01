@@ -20,8 +20,8 @@ use yii\helpers\Html;
 
 class user extends \yii\db\ActiveRecord  implements \yii\web\IdentityInterface
 {
-   public static function getList()
-   {
+ public static function getList()
+ {
     return \yii\helpers\ArrayHelper::map(self::find()->all(), 'id', 'nama');
 }
 
@@ -149,31 +149,31 @@ public function getPetugas()
     public static function getFotoAdmin($htmlOptions=[])
     {
         return Html::img('@web/images/admin.jpg', $htmlOptions);
- }
+    }
 
- public static function getFotoAnggota($htmlOptions=[])
- {
-     $query = Anggota::find()
-     ->andWhere(['id' => Yii::$app->user->identity->id_anggota])
-     ->one();
+    public static function getFotoAnggota($htmlOptions=[])
+    {
+       $query = Anggota::find()
+       ->andWhere(['id' => Yii::$app->user->identity->id_anggota])
+       ->one();
 
-     if ($query->foto != null) {
-         return Html::img('@web/user/' . $query->foto, $htmlOptions);
-     } else {
-         return Html::img('@web/user/no-images.png', $htmlOptions);
-     }
- }
+       if ($query->foto != null) {
+           return Html::img('@web/user/' . $query->foto, $htmlOptions);
+       } else {
+           return Html::img('@web/user/no-images.png', $htmlOptions);
+       }
+   }
 
- public static function getFotoPetugas($htmlOptions=[])
- {
-     $query = Petugas::find()
-     ->andWhere(['id' => Yii::$app->user->identity->id_petugas])
-     ->one();
+   public static function getFotoPetugas($htmlOptions=[])
+   {
+       $query = Petugas::find()
+       ->andWhere(['id' => Yii::$app->user->identity->id_petugas])
+       ->one();
 
-     if ($query->foto != null) {
-         return Html::img('@web/user/' . $query->foto, $htmlOptions);
-     } else {
-         return Html::img('@web/user/no-images.png', $htmlOptions);
-     }
- }
+       if ($query->foto != null) {
+           return Html::img('@web/user/' . $query->foto, $htmlOptions);
+       } else {
+           return Html::img('@web/user/no-images.png', $htmlOptions);
+       }
+   }
 }

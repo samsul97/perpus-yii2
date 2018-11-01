@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\User;
 use app\models\Registrasi;
+use app\models\Petugas;
 use app\models\NewPassword;
 use app\models\Anggota;
 use app\models\Forget;
@@ -222,7 +223,7 @@ class SiteController extends Controller
     {
         $this->layout = 'main-login';
         $model = new Registrasi();
-        if ($model->load(Yii::$app->request->post()))
+        if ($model->load(Yii::$app->request->post()) && $model->validate())
         {
             $anggota = new Anggota();
             $anggota->nama = $model->nama;

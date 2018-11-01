@@ -13,7 +13,11 @@ use yii\helpers\StringHelper;
  * @property int $id_anggota
  * @property string $tanggal_pinjam
  * @property string $tanggal_kembali
- */
+ * @param $tanggal_lalu
+ * @param $tanggal_sekarang
+ * @param string $key default (days)
+ * @return int
+*/
 class Peminjaman extends \yii\db\ActiveRecord
 {
     /**
@@ -97,5 +101,38 @@ class Peminjaman extends \yii\db\ActiveRecord
         $lastDay = date("t", strtotime($tahun.'_'.$bulan));
 
         return static::find()->andWhere(['between','tanggal_pinjam', "$tahun-$bulan-01", "$tahun-$bulan-$lastDay"]);
+    }
+    public function getStatusPeminjaman()
+    {
+        if ($this->status_buku === 0) {
+            return "Dikembalikan";
+        }
+        else{
+            return "Belum di kembalikan";
+        }
+    }
+    public static function getSelisihTanggal($tanggal_lalu, $tanggal_sekarang, $key = 'd')
+    {
+        $tanggal_lalu  = date_create($tanggal_lalu);
+        $tanggal_sekarang = date_create($tanggal_sekarang)/*->modify('+1 day')*/; //Tangal sekarang +1 hari
+        $diff  = date_diff($tanggal_lalu, $tanggal_sekarang);
+        switch ($key) {
+            case 'y':
+                return $diff->y;
+                break;
+            case 'm':
+                return $diff->m;
+                break;
+            case 'd':
+                return $diff->d;
+                break;
+            default:
+                return $diff->h;
+                break;
+        }
+    }
+    public function getTanggal()
+    {
+        return $this->getSelisihTanggal($this->tanggal_pinjam, $this->tanggal_kembali);
     }
 }

@@ -180,7 +180,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     };
                                 },
                                 'filter'=>[
-                                    0 => 'Belum Di Kembalikan',
+                                    
                                     1 => 'Sedang Di Pinjam',
                                     2 => 'Sudah Di Kembalikan',
                                 ],

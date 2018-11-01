@@ -39,67 +39,67 @@ echo $cache['language'];?>
     <br>
     <div class="row" style="margin: 3px;">
       <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <p>Jumlah Anggota</p>
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+          <div class="inner">
+            <p>Jumlah Anggota</p>
 
-                    <h3><?= Yii::$app->formatter->asInteger(Anggota::getCount()); ?></h3>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-user"></i>
-                </div>
-                <a href="<?=Url::to(['anggota/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
+            <h3><?= Yii::$app->formatter->asInteger(Anggota::getCount()); ?></h3>
+          </div>
+          <div class="icon">
+            <i class="fa fa-user"></i>
+          </div>
+          <a href="<?=Url::to(['anggota/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
+      </div>
 
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-blue">
-                <div class="inner">
-                    <p>Jumlah Petugas</p>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-blue">
+          <div class="inner">
+            <p>Jumlah Petugas</p>
 
-                    <h3><?= Yii::$app->formatter->asInteger(Petugas::getCount()); ?></h3>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-users"></i>
-                </div>
-                <a href="<?=Url::to(['petugas/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
+            <h3><?= Yii::$app->formatter->asInteger(Petugas::getCount()); ?></h3>
+          </div>
+          <div class="icon">
+            <i class="fa fa-users"></i>
+          </div>
+          <a href="<?=Url::to(['petugas/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
+      </div>
 
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-gray">
-                <div class="inner">
-                    <p>Jumlah User</p>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-gray">
+          <div class="inner">
+            <p>Jumlah User</p>
 
-                    <h3><?= Yii::$app->formatter->asInteger(Kategori::getCount()); ?></h3>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-users"></i>
-                </div>
-                <a href="<?=Url::to(['user/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
+            <h3><?= Yii::$app->formatter->asInteger(Kategori::getCount()); ?></h3>
+          </div>
+          <div class="icon">
+            <i class="fa fa-users"></i>
+          </div>
+          <a href="<?=Url::to(['user/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
+      </div>
 
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-white">
-                <div class="inner">
-                    <p>Jumlah Penulis</p>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-white">
+          <div class="inner">
+            <p>Jumlah Penulis</p>
 
-                    <h3><?= Yii::$app->formatter->asInteger(Penulis::getCount()); ?></h3>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-user"></i>
-                </div>
-                <a href="<?=Url::to(['penulis/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
+            <h3><?= Yii::$app->formatter->asInteger(Penulis::getCount()); ?></h3>
+          </div>
+          <div class="icon">
+            <i class="fa fa-user"></i>
+          </div>
+          <a href="<?=Url::to(['penulis/index']);?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
+      </div>
 
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
@@ -229,8 +229,8 @@ echo $cache['language'];?>
 
           <div class="box-header with-border">
             <div class="user-block">
-              
-              
+
+
               <span class="username"><?= Html::a($buku->nama, ['buku/view', 'id' => $buku->id]); ?></span>
               <span class="description"> Di Terbitkan : Tahun <?= $buku->tahun_terbit; ?></span>
             </div>
@@ -479,38 +479,90 @@ echo $cache['language'];?>
         ]);?>
       </div>
     </div>
-<br>
-<br>
-<br>
+    <br>
+    <br>
+    <br>
     <div class="col-sm-6">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Grafik Peminjaman Buku</h3>
-                </div>
-                <div class="box-body">
-                    <?= \miloschuman\highcharts\Highcharts::widget([
-                    'options' => [
-                        'credits' => true,
-                        'title' => ['text' => 'ANGKA DATA PEMINJAMAN BUKU PERBULAN'],
-                        'exporting' => ['enabled' => true],
-                        'xAxis' => [
-                            'categories' => \app\components\Helper::getListBulanGrafik(),
-                        ],
-                        'series' => [
-                            [
-                                'type' => 'column',
-                                'colorByPoint' => true,
-                                'name' => 'Peminjaman',
-                                'data' => \app\models\Peminjaman::getCountGrafik(),
-                                'showInLegend' => false
-                            ],
-                        ],
-                    ]
-                ]) ?>
-                </div>
-            </div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Grafik Peminjaman Buku</h3>
         </div>
+        <div class="box-body">
+          <?= \miloschuman\highcharts\Highcharts::widget([
+            'options' => [
+              'credits' => true,
+              'title' => ['text' => 'ANGKA DATA PEMINJAMAN BUKU PERBULAN'],
+              'exporting' => ['enabled' => true],
+              'xAxis' => [
+                'categories' => \app\components\Helper::getListBulanGrafik(),
+              ],
+              'series' => [
+                [
+                  'type' => 'column',
+                  'colorByPoint' => true,
+                  'name' => 'Peminjaman',
+                  'data' => \app\models\Peminjaman::getCountGrafik(),
+                  'showInLegend' => false
+                ],
+              ],
+            ]
+          ]) ?>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <div class="box box-primary">
+    <div class="box-header with border">
+      <div class="box box-title">
+        <h3 class="box-title">
+          Daftar Peminjam Terbaru
+        </h3>
+      </div>
+    
+    <div class="box box-body">
+      <table class="table table-bordered table-stripped">
+        <thead>
+          <tr>
+            <th width="55px" class="text-center" rowspan="2">No</th>
+            <th class="text-center" rowspan="2">Nama Buku</th>
+            <th class="text-center" rowspan="2">Nama Peminjam</th>
+            <th class="text-center" colspan="5">Tanggal Pengembalian</th>
+          </tr>
+          <tr>
+            <th width="150px" class="text-center">Tanggal Pinjam</th>
+            <th width="150px" class="text-center">Batas Kembali</th>
+            <th width="150px" class="text-center">Pengembalian</th>
+            <th width="150px" class="text-center">Status</th>
+            <th width="150px" class="text-center">Selisih</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php $no=1; ?>
+          <?php foreach (Peminjaman::find()->andWhere(['status_buku' => 1])->orderBy(['tanggal_pinjam' => SORT_DESC])->limit(10)->all() as $peminjaman): ?>
+            
+          <tr>
+            <td class="text-center"><?= $no; ?></td>
+            <td><?= $peminjaman->buku->nama ?></td>
+            <td><?= $peminjaman->anggota->nama ?></td>
+            <td><center><?= $peminjaman->tanggal_pinjam ?></center></td>
+            <td><center><?= $peminjaman->tanggal_kembali ?></center></td>
+            <td><center><?= $peminjaman->tanggal_pengembalian_buku ?></center></td>
+            <td><center><?= $peminjaman->getStatusPeminjaman() ?></center></td>
+            <td><center><?= $peminjaman->getTanggal() ?></center></td>
+            
+            <td class="text-center">
+              <?= Html::a('<i class="fa fa-check-square-o"></i>', $url = null, ['data-toggle' => 'tooltip', 'title' => 'Setujui Buku','data-confirm' => 'Apakah anda yakin akan menyetujui buku yang di pinjam?']); ?>
+            </td>
+          </tr>
+          <?php $no++ ?> 
+          <?php endforeach ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+</div>
 </div>
 </div>
 </div>

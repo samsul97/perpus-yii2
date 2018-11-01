@@ -3,17 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Petugas;
-use app\models\PetugasSearch;
+use app\models\KenaikanDenda;
+use app\models\KenaikanDendaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
-use app\models\User;
+
 /**
- * PetugasController implements the CRUD actions for Petugas model.
+ * KenaikanDendaController implements the CRUD actions for KenaikanDenda model.
  */
-class PetugasController extends Controller
+class KenaikanDendaController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,12 +30,12 @@ class PetugasController extends Controller
     }
 
     /**
-     * Lists all Petugas models.
+     * Lists all KenaikanDenda models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PetugasSearch();
+        $searchModel = new KenaikanDendaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class PetugasController extends Controller
     }
 
     /**
-     * Displays a single Petugas model.
+     * Displays a single KenaikanDenda model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -59,40 +58,16 @@ class PetugasController extends Controller
     }
 
     /**
-     * Creates a new Petugas model.
+     * Creates a new KenaikanDenda model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Petugas();
+        $model = new KenaikanDenda();
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $petugas = new Petugas();
-            $petugas->nama = $model->nama;
-            $petugas->alamat = $model->alamat;
-            $petugas->telepon = $model->telepon;
-            $petugas->email = $model->email;
-            $foto = UploadedFile::getInstance($model, 'foto');
-            $model->foto = time(). '_' . $foto->name;
-            $foto->saveAs(Yii::$app->basePath. '/web/user/' . $model->foto);
-            $petugas->foto = $model->foto;
-            $petugas->save();
-
-
-            $user = new User();
-            $user->id_petugas = $petugas->id;
-            $user->id_user_role = $petugas->id;
-            $user->username = $model->username;
-            $user->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
-            $user->id_anggota = 0;
-            $user->id_user_role = 3;
-            $user->status = 1;            
-            $user->token = Yii::$app->getSecurity()->generateRandomString(100);
-            
-            $user->save();
-            Yii::$app->session->setFlash('success', 'Berhasil menambahkan petugas');
-            return $this->redirect(['index', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -101,7 +76,7 @@ class PetugasController extends Controller
     }
 
     /**
-     * Updates an existing Petugas model.
+     * Updates an existing KenaikanDenda model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -112,8 +87,7 @@ class PetugasController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Data berhasil di perbaharui');
-            return $this->redirect(['index', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -122,7 +96,7 @@ class PetugasController extends Controller
     }
 
     /**
-     * Deletes an existing Petugas model.
+     * Deletes an existing KenaikanDenda model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -136,15 +110,15 @@ class PetugasController extends Controller
     }
 
     /**
-     * Finds the Petugas model based on its primary key value.
+     * Finds the KenaikanDenda model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Petugas the loaded model
+     * @return KenaikanDenda the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Petugas::findOne($id)) !== null) {
+        if (($model = KenaikanDenda::findOne($id)) !== null) {
             return $model;
         }
 

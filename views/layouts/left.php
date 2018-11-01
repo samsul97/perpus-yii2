@@ -56,6 +56,7 @@ use app\models\User;
                             ['label' => 'Penerbit', 'icon' => 'bookmark', 'url' => ['penerbit/index']],
                             ['label' => 'Penulis', 'icon' => 'pencil', 'url' => ['penulis/index']],
                             ['label' => 'kategori', 'icon' => 'list', 'url' => ['kategori/index']],
+                            ['label' => 'Denda', 'icon' => 'dollar', 'url' => ['kenaikan-denda/index']],
                         ],
                     ],
 
@@ -70,6 +71,21 @@ use app\models\User;
                             // ['label' => 'Anggota', 'url' => ['anggota/index'], 'visible' => Yii::$app->user->isGuest],
                         ],
                     ],
+                    ['label' => 'Menu Fitur Lain', 'options' => ['class' => 'header']],
+                        [
+                            'label' => 'Fitur Lain',
+                            'icon' => 'gear',
+                            'url' => '#',
+                            'items' => [
+                                ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
+                                ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
+                                ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                            ],
+                        ],
+                        ['label' => 'Lain-lain', 'options' => ['class' => 'header']],
+                        ['label' => 'Kontak', 'icon' => 'tty', 'url' => ['site/contact'],],
+                        ['label' => 'Tentang', 'icon' => 'font', 'url' => ['site/about'],],
+                        
                 ],  
             ]
         ) ?>
