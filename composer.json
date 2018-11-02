@@ -37,7 +37,8 @@
         "yiisoft/yii2-authclient": "*",
         "kartik-v/yii2-widgets": "dev-master",
         "dektrium/yii2-user": "0.9.*@dev",
-        "2amigos/yii2-google-maps-library": "*"
+        "2amigos/yii2-google-maps-library": "*",
+        "2amigos/qrcode-library": "^1.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

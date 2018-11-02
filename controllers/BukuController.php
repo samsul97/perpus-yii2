@@ -20,6 +20,7 @@ use yii\base\Behavior;
 use yii\helpers\Url;
 use app\models\User;
 use yii\filters\AccessControl;
+use Da\QrCode\QrCode;
 
 /**
  * BukuController implements the CRUD actions for Buku model.
@@ -714,6 +715,15 @@ public function actionExportWord2()
         header('Expires: 0');
         $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $xmlWriter->save("php://output");
+}
+public function actionQrCode()
+{
+    $qrCode = (new QrCode('Nama Buku'. $model->nama))
+    ->setSize(250)
+    ->setMargin(5)
+    ->useForegroundColor(0, 0, 0);
+
+    $qrCode->writeFile(Yii::$app->basePath . '@web/qrcode/code.png');
 }
 
 }
