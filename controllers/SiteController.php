@@ -9,7 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\User;
+
 use app\models\Registrasi;
 use app\models\Petugas;
 use app\models\NewPassword;
@@ -20,7 +20,7 @@ use yii\authclient\client\Facebook;
 use yii\data\ActiveDataProvider;
 use yii\widgets\ListView;
 use yii\web\UploadedFile;
-
+use app\models\User;
 
 class SiteController extends Controller
 {

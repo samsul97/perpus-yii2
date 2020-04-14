@@ -20,7 +20,7 @@ use app\models\User;
                        <?php endif ?>
             </div>
             <div class="pull-left info">
-                <p><?= Yii::$app->user->identity->username ?></p>
+                
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -125,7 +125,7 @@ use app\models\User;
                             ['label' => 'kategori', 'icon' => 'list', 'url' => ['kategori/index']],
                         ],
                     ],
-                    ['label' => 'Profil saya', 'icon' => 'user', 'url' => ['buku/update', Yii::$app->user->identity->id_user_role == 3]],
+                    ['label' => 'Profil saya', 'icon' => 'user', 'url' => ['petugas/update', 'id' => Yii::$app->user->identity->id_petugas]],
                 ],  
             ]
         ) ?>

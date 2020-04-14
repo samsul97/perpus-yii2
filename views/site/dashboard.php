@@ -519,49 +519,45 @@ echo $cache['language'];?>
           Daftar Peminjam Terbaru
         </h3>
       </div>
-    
-    <div class="box box-body">
-      <table class="table table-bordered table-stripped">
-        <thead>
-          <tr>
-            <th width="55px" class="text-center" rowspan="2">No</th>
-            <th class="text-center" rowspan="2">Nama Buku</th>
-            <th class="text-center" rowspan="2">Nama Peminjam</th>
-            <th class="text-center" colspan="5">Tanggal Pengembalian</th>
-          </tr>
-          <tr>
-            <th width="150px" class="text-center">Tanggal Pinjam</th>
-            <th width="150px" class="text-center">Batas Kembali</th>
-            <th width="150px" class="text-center">Pengembalian</th>
-            <th width="150px" class="text-center">Status</th>
-            <th width="150px" class="text-center">Selisih</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php $no=1; ?>
-          <?php foreach (Peminjaman::find()->andWhere(['status_buku' => 1])->orderBy(['tanggal_pinjam' => SORT_DESC])->limit(10)->all() as $peminjaman): ?>
-            
-          <tr>
-            <td class="text-center"><?= $no; ?></td>
-            <td><?= $peminjaman->buku->nama ?></td>
-            <td><?= $peminjaman->anggota->nama ?></td>
-            <td><center><?= $peminjaman->tanggal_pinjam ?></center></td>
-            <td><center><?= $peminjaman->tanggal_kembali ?></center></td>
-            <td><center><?= $peminjaman->tanggal_pengembalian_buku ?></center></td>
-            <td><center><?= $peminjaman->getStatusPeminjaman() ?></center></td>
-            <td><center><?= $peminjaman->getTanggal() ?></center></td>
-            
-            <td class="text-center">
-              <?= Html::a('<i class="fa fa-check-square-o"></i>', $url = null, ['data-toggle' => 'tooltip', 'title' => 'Setujui Buku','data-confirm' => 'Apakah anda yakin akan menyetujui buku yang di pinjam?']); ?>
+
+      <div class="box box-body">
+        <table class="table table-bordered table-stripped">
+          <thead>
+            <tr>
+              <th width="55px" class="text-center" rowspan="2">No</th>
+              <th class="text-center" rowspan="2">Nama Buku</th>
+              <th class="text-center" rowspan="2">Nama Peminjam</th>
+              <th class="text-center" colspan="5">Tanggal Pengembalian</th>
+            </tr>
+            <tr>
+              <th width="150px" class="text-center">Tanggal Pinjam</th>
+              <th width="150px" class="text-center">Batas Kembali</th>
+              <th width="150px" class="text-center">Pengembalian</th>
+              <th width="150px" class="text-center">Selisih</th>
+              <th width="150px" class="text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php $i = 1?>
+            <?php foreach (Peminjaman::find()->andWhere(['status_buku' => 1])->orderBy(['tanggal_pinjam' =>  SORT_DESC])->limit(10)->all() as $peminjam): ?>
+            <tr>
+              <td class="text-center"><?= $i++ ?></td>
+              <td class="text-center"><?= $peminjam->buku->nama ?></td>
+              <td class="text-center"><?= $peminjam->anggota->nama ?></td>
+              <td class="text-center"><?= $peminjam->tanggal_pinjam ?></td>
+              <td class="text-center"><?= $peminjam->tanggal_kembali ?></td>
+              <td class="text-center"><?= $peminjam->tanggal_pengembalian_buku ?></td>
+              <td class="text-center"><?= $peminjam->getTanggal() ?> Hari</td>
+              <td class="text-center"><?= $peminjam->getStatusPeminjaman() ?></td>
+              <td class="text-center"><?= Html::a('<i class="fa fa-check-square-o"></i>', ['peminjaman/kembalikan-buku', 'id' => $peminjam->id], ['data' => ['confirm' => 'Apa anda yakin ingin menyutujui Buku ini?'],]); ?>
             </td>
           </tr>
-          <?php $no++ ?> 
-          <?php endforeach ?>
-        </tbody>
-      </table>
-    </div>
+        <?php endforeach ?>
+      </tbody>
+    </table>
   </div>
-  </div>
+</div>
+</div>
 </div>
 </div>
 </div>

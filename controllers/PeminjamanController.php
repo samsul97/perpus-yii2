@@ -168,12 +168,42 @@ class PeminjamanController extends Controller
     public function actionKembalikanBuku($id)
     {
         $model = Peminjaman::findOne($id);
-        
         $model->status_buku = 2;
         $model->tanggal_pengembalian_buku = date('Y-m-d');
+        $selisih = $model->getSelisih();
 
-        $model->save();
+        $denda1 = new Denda();
+        $denda1->id_peminjaman = $model->id;
 
+        if (KenaikanDenda::getDenda(1) <= $selisih) {
+            // selisih 1
+            $model->harga;
+        } elseif (KenaikanDenda::getDenda(2) <= $selisih) {
+            // selisih 2
+        } elseif (KenaikanDenda::getDenda(3) <= $selisih) {
+            // selisih 3
+        } elseif (KenaikanDenda::getDenda(4) <= $selisih) {
+            // selisih 4
+        } elseif (KenaikanDenda::getDenda(5) <= $selisih) {
+            // selisih 5
+        } elseif (KenaikanDenda::getDenda(6) <= $selisih) {
+            // selisih 6
+        } else{
+            // selisih 7
+        }
+
+        foreach (\app\models\KenaikanDenda::find()->all() as $denda) {
+            if ($denda->hari <= selisih) {
+                $model->harga = $denda->harga;
+                $denda1->harga = $denda->harga;
+            } else
+            {
+                $model->harga = 0;
+            }
+        }
+
+
+        $model->save(false);
         Yii::$app->session->setFlash('Berhasil', 'Buku telah berhasil di kembalikan');
         return $this->redirect(['peminjaman/index']);
     }

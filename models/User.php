@@ -101,8 +101,8 @@ public function getPetugas()
     }
     public function validatePassword($password)
     {
-        // return $this->password == $password;
-        return Yii::$app->getSecurity()->validatePassword($password, $this->password);
+        return $this->password == $password;
+        // return Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
     public static function isAdmin()
     {
@@ -148,7 +148,7 @@ public function getPetugas()
 
     public static function getFotoAdmin($htmlOptions=[])
     {
-        return Html::img('@web/images/admin.jpg', $htmlOptions);
+        return Html::img('@web/user/admin.jpg', $htmlOptions);
     }
 
     public static function getFotoAnggota($htmlOptions=[])

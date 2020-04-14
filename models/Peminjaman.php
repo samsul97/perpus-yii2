@@ -102,15 +102,6 @@ class Peminjaman extends \yii\db\ActiveRecord
 
         return static::find()->andWhere(['between','tanggal_pinjam', "$tahun-$bulan-01", "$tahun-$bulan-$lastDay"]);
     }
-    public function getStatusPeminjaman()
-    {
-        if ($this->status_buku === 0) {
-            return "Dikembalikan";
-        }
-        else{
-            return "Belum di kembalikan";
-        }
-    }
     public static function getSelisihTanggal($tanggal_lalu, $tanggal_sekarang, $key = 'd')
     {
         $tanggal_lalu  = date_create($tanggal_lalu);
@@ -133,6 +124,15 @@ class Peminjaman extends \yii\db\ActiveRecord
     }
     public function getTanggal()
     {
-        return $this->getSelisihTanggal($this->tanggal_pinjam, $this->tanggal_kembali);
+        return $this->getSelisihTanggal($this->tanggal_kembali, date('Y-m-d'));
+    }
+    public function getStatusPeminjaman()
+    {
+        if ($this->status_buku === 0) {
+            return "Dikembalikan";
+        }
+        else{
+            return "Belum di kembalikan";
+        }
     }
 }
